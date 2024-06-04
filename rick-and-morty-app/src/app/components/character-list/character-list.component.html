@@ -1,17 +1,78 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-4" *ngFor="let character of characters">
-            <div class="card">
-            <img [src]="character.image" class="card-img-top" alt="{{ character.name }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ character.name }}</h5>
-                <p class="card-text">Cinsiyet: {{ character.gender }}</p>
-                <p class="card-text">Tür: {{ character.species }}</p>
-                <p class="card-text">Durum: {{ character.status }}</p>
-                <a [routerLink]="['/character', character.id]" class="btn btn-primary">Detaylar</a>
-            </div>
-            </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-row mb-3">
+        <div class="col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Karakter İsmi"
+            [(ngModel)]="nameFilter"
+          />
         </div>
+        <div class="col-md-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Karakter Türü"
+            [(ngModel)]="speciesFilter"
+          />
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" [(ngModel)]="statusFilter">
+            <option value="">Durum</option>
+            <option value="alive">Yaşayan</option>
+            <option value="dead">Ölü</option>
+            <option value="unknown">Bilinmeyen</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" [(ngModel)]="genderFilter">
+            <option value="">Cinsiyet</option>
+            <option value="male">Male</option>
+            <option value="female">Kadın</option>
+            <option value="genderless">Cinsiyetsiz</option>
+            <option value="unknown">Bilinmeyen</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="text-right mb-3">
+        <button class="btn btn-primary mr-2" (click)="filterCharacters()">
+          Filtrele
+        </button>
+        <button class="btn btn-secondary" (click)="clearFilters()">
+          Temizle
+        </button>
+      </div>
     </div>
+    <div class="col-md-3" *ngFor="let character of characters">
+      <div class="card">
+        <img
+          [src]="character.image"
+          class="card-img-top"
+          alt="{{ character.name }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ character.name }}</h5>
+          <p class="card-text">Cinsiyet: {{ character.gender }}</p>
+          <p class="card-text">Tür: {{ character.species }}</p>
+          <p class="card-text">Durum: {{ character.status }}</p>
+          <a [routerLink]="['/character', character.id]" class="btn btn-primary"
+            >Detaylar</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 text-center">
+      <button
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        class="btn btn-primary mr-2"
+      >
+        Önceki
+      </button>
+      <button (click)="nextPage()" class="btn btn-primary">Sonraki</button>
+    </div>
+  </div>
 </div>
-  
