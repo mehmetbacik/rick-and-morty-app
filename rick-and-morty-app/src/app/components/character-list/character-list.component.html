@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" *ngFor="let character of characters">
+            <div class="card">
+            <img [src]="character.image" class="card-img-top" alt="{{ character.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ character.name }}</h5>
+                <p class="card-text">Cinsiyet: {{ character.gender }}</p>
+                <p class="card-text">Tür: {{ character.species }}</p>
+                <p class="card-text">Durum: {{ character.status }}</p>
+                <a [routerLink]="['/character', character.id]" class="btn btn-primary">Detaylar</a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
