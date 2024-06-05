@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterService } from '../../services/character.service';
 import { RouterModule } from '@angular/router';
@@ -18,6 +18,7 @@ export class CharacterListComponent implements OnInit {
   speciesFilter: string = '';
   statusFilter: string = '';
   genderFilter: string = '';
+  showNoResultsMessage: boolean = false;
 
   constructor(private characterService: CharacterService) {}
 
@@ -29,7 +30,17 @@ export class CharacterListComponent implements OnInit {
     this.characterService.setFilters(this.nameFilter, this.speciesFilter, this.statusFilter, this.genderFilter);
     this.characterService.getCharacters(page)
       .subscribe(response => {
-        this.characters = response.results;
+        if (response.results.length === 0) {
+          this.characters = [];
+          this.showNoResultsMessage = true;
+        } else {
+          this.characters = response.results;
+          this.showNoResultsMessage = false;
+        }
+      }, error => {
+        //console.error('Characters Error:', error);
+        this.characters = [];
+        this.showNoResultsMessage = true;
       });
   }
 
@@ -50,11 +61,19 @@ export class CharacterListComponent implements OnInit {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.getCharacters(this.currentPage);
+      this.scrollToTop();
     }
   }
 
   nextPage(): void {
     this.currentPage++;
     this.getCharacters(this.currentPage);
+    this.scrollToTop();
+  }
+
+  @ViewChild('top') topElement!: ElementRef;
+
+  private scrollToTop(): void {
+    this.topElement.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

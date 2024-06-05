@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container" #top>
   <div class="my-3 p-3 bg-white rounded">
     <div class="row">
       <div class="col-lg-3 col-md-6 mb-3">
         <input
           type="text"
           class="form-control"
-          placeholder="Karakter İsmi"
+          placeholder="Name"
           [(ngModel)]="nameFilter"
         />
       </div>
@@ -13,25 +13,25 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Karakter Türü"
+          placeholder="Species"
           [(ngModel)]="speciesFilter"
         />
       </div>
       <div class="col-lg-3 col-md-6 mb-3">
         <select class="form-control" [(ngModel)]="statusFilter">
-          <option value="">Durum</option>
-          <option value="alive">Yaşayan</option>
-          <option value="dead">Ölü</option>
-          <option value="unknown">Bilinmeyen</option>
+          <option value="">Status</option>
+          <option value="alive">Alive</option>
+          <option value="dead">Dead</option>
+          <option value="unknown">Unknow</option>
         </select>
       </div>
       <div class="col-lg-3 col-md-6 mb-3">
         <select class="form-control" [(ngModel)]="genderFilter">
-          <option value="">Cinsiyet</option>
+          <option value="">Gender</option>
           <option value="male">Male</option>
-          <option value="female">Kadın</option>
-          <option value="genderless">Cinsiyetsiz</option>
-          <option value="unknown">Bilinmeyen</option>
+          <option value="female">Female</option>
+          <option value="genderless">Genderless</option>
+          <option value="unknown">Unknow</option>
         </select>
       </div>
     </div>
@@ -39,16 +39,18 @@
       <div class="col-md-12">
         <div class="d-flex align-items-center justify-content-end gap-2">
           <button class="btn btn-primary mr-2" (click)="filterCharacters()">
-            Filtrele
+            Search
           </button>
           <button class="btn btn-danger" (click)="clearFilters()">
-            Temizle
+            Clear
           </button>
         </div>
       </div>
     </div>
   </div>
-
+  <div *ngIf="showNoResultsMessage" class="alert alert-warning" role="alert">
+    Sorry, no results found.
+  </div>
   <div class="row">
     <div class="col-lg-3 col-md-6 mb-4" *ngFor="let character of characters">
       <div class="card">
@@ -59,11 +61,11 @@
         />
         <div class="card-body">
           <h5 class="card-title">{{ character.name }}</h5>
-          <p class="card-text">Cinsiyet: {{ character.gender }}</p>
-          <p class="card-text">Tür: {{ character.species }}</p>
-          <p class="card-text">Durum: {{ character.status }}</p>
+          <p class="card-text">Gender: {{ character.gender }}</p>
+          <p class="card-text">Species: {{ character.species }}</p>
+          <p class="card-text">Status: {{ character.status }}</p>
           <a [routerLink]="['/character', character.id]" class="btn btn-primary"
-            >Detaylar</a
+            >Details</a
           >
         </div>
       </div>
@@ -72,15 +74,17 @@
 
   <div class="my-3 p-3 bg-white rounded">
     <div class="row">
-      <div class="d-flex align-items-center gap-2 justify-content-center col-md-12">
+      <div
+        class="d-flex align-items-center gap-2 justify-content-center col-md-12"
+      >
         <button
           (click)="previousPage()"
           [disabled]="currentPage === 1"
           class="btn btn-primary mr-2"
         >
-          Önceki
+          Previous
         </button>
-        <button (click)="nextPage()" class="btn btn-primary">Sonraki</button>
+        <button (click)="nextPage()" class="btn btn-primary">Next</button>
       </div>
     </div>
   </div>
