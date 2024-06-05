@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+    &#rick-and-morty-app {
+        width: 100%;
+        height: 100%;
+        background: #000 url(../public/stars.png) repeat top;
+        main {
+            nav {
+                position: sticky;
+                top: 0;
+                z-index: 999;
+                &.navbar {
+                    .navbar-brand {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}

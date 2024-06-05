@@ -26,7 +26,8 @@ export class CharacterListComponent implements OnInit {
   }
 
   getCharacters(page: number): void {
-    this.characterService.filterCharacters(this.nameFilter, this.speciesFilter, this.statusFilter, this.genderFilter)
+    this.characterService.setFilters(this.nameFilter, this.speciesFilter, this.statusFilter, this.genderFilter);
+    this.characterService.getCharacters(page)
       .subscribe(response => {
         this.characters = response.results;
       });
